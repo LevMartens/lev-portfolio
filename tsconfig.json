@@ -1,0 +1,82 @@
+{
+  "compilerOptions": {
+    "target": "es2020",
+    "lib": [
+      "dom",
+      "dom.iterable",
+      "esnext"
+    ],
+    "checkJs": false,
+    "allowJs": true,
+    "skipLibCheck": true,
+    "strict": false,
+    "allowSyntheticDefaultImports": true,
+    "forceConsistentCasingInFileNames": false,
+    "noEmit": true,
+    "incremental": true,
+    "esModuleInterop": true,
+    "module": "esnext",
+    "moduleResolution": "node",
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "jsx": "preserve",
+    "baseUrl": ".",
+    "rootDir": ".",
+    "paths": {
+      "@pages": [
+        "pages/*"
+      ],
+      "@assets": [
+        "src/assets/*"
+      ],
+      "@helpers": [
+        "src/helpers/*"
+      ],
+      "@public": [
+        "public/*"
+      ],
+      "@styles/*": [
+        "src/styles/*"
+      ],
+      "@contexts/*": [
+        "src/contexts/*"
+      ],
+      "@services/*": [
+        "src/services/*"
+      ],
+      "@hooks/*": [
+        "src/hooks/*"
+      ],
+      "@components/*": [
+        "src/components/*"
+      ],
+      "@layout/*": [
+        "src/layout/*"
+      ],
+      "@navigation/*": [
+        "src/navigation/*"
+      ],
+      "@utils/*": [
+        "src/utils/*"
+      ],
+      "@root/*": [
+        "src/*"
+      ]
+    }
+  },
+  "plugins": [
+    {
+      "name": "typescript-styled-plugin"
+    }
+  ],
+  "include": [
+    "next-env.d.ts",
+    "**/*.ts",
+    "**/*.tsx",
+    "**/*.js",
+    "**/*.jsx"
+  ],
+  "exclude": [
+    "node_modules"
+  ]
+}
