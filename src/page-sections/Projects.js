@@ -12,64 +12,62 @@ import {
     Banner,
     CaveatDescription,
     SansDescriptionP,
-    SansListItem,
 } from '../../styles/Fonts';
 
 const Container = styled.div`
+    min-height: 100vh;
     max-width: 1000px;
+    margin: 0 auto;
     display: flex;
     flex-direction: column;
-    justify-content: space-evenly;
-    margin-bottom: 300px;
-    //margin-left: 100px;
+    justify-content: center;
+    align-items: flex-start;
+`;
+
+const ProjectsSection = styled.div`
+    margin: 20px 0 0;
 `;
 
 const ATag = styled.a`
     text-decoration: none;
+    cursor: pointer;
 `;
 
 const DescriptionBox = styled.div`
-    position: absolute;
-    top: 130px;
-    right: 70px;
-    //margin-right: 70px;
+    position: relative;
+    z-index: 3;
+    margin: 20px 0;
     padding: 15px 20px;
-    background-color: white; //#faf9f6; //#f5f5f5; //#f2f8ff;
+    background-color: white;
     border-radius: 3px;
-    //border: 1px solid rgba(0, 0, 0, 0.24);
     box-shadow: rgba(0, 0, 0, 0.24) 0 3px 8px;
 `;
 
-const DescriptionColumn = styled.div`
+const TechnologyRow = styled.div`
+    //background-color: plum;
     position: relative;
-    background-color: cadetblue;
+    z-index: 3;
     display: flex;
-    flex-direction: column;
-    justify-content: flex-start;
-`;
-const ImageDecoration = styled(motion.div)`
-    position: relative;
-    display: flex;
-    grid-column: -1 / 1; // 1 / 8;
-    grid-area: 1 / 6 / -1 / -1;
-    //padding: 5px;
-    //height: 400px;
-    //width: 520px;
-    width: 100%;
-    margin-left: 20px;
-    //background: linear-gradient(180deg, #d0e, #91f);
-    border-radius: 3px;
-    // box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
-    box-shadow: rgba(0, 0, 0, 0.24) 0 3px 8px;
+    flex-wrap: wrap;
+    flex-direction: row;
+    //justify-content: flex-end;
+
+    &:not(:last-of-type) {
+        margin: 20px 0;
+    }
 `;
 
-const GridRow = styled.div`
-    background-color: aqua;
+const GridRow = styled.li`
     position: relative;
     display: grid;
     grid-gap: 10px;
     grid-template-columns: repeat(12, 1fr);
     align-items: center;
+    //margin: 0;
+    //padding: 0;
+    @media (max-width: 768px) {
+        grid-template-rows: 1fr 1fr;
+    }
 
     &:not(:last-of-type) {
         margin-bottom: 100px;
@@ -83,95 +81,101 @@ const GridRow = styled.div`
         }
     }
 
-    &:nth-of-type(even) {
+    &:nth-of-type(odd) {
         .project-content {
             grid-column: 7 / -1;
+            grid-row: 1 / -1;
+            position: relative;
             text-align: right;
-            background-color: coral;
-            height: 4rem;
-            min-width: 0;
-
-            //margin: 0 auto;
-            //@media (max-width: 1080px) {
-            //    grid-column: 5 / -1;
-            //}
-            //@media (max-width: 768px) {
-            //    grid-column: 1 / -1;
-            //    padding: 40px 40px 30px;
-            //    text-align: left;
-            //}
-            //@media (max-width: 480px) {
-            //    padding: 25px 25px 20px;
-            //}
+            z-index: 3;
+            @media (max-width: 1080px) {
+                grid-column: 5 / -1;
+            }
+            @media (max-width: 768px) {
+                grid-column: 1 /-1;
+                grid-row: 1 / 2;
+            }
         }
-        //.project-tech-list {
-        //    justify-content: flex-end;
-        //
-        //    @media (max-width: 768px) {
-        //        justify-content: flex-start;
-        //    }
-        //
-        //    li {
-        //        margin: 0 0 5px 20px;
-        //
-        //        @media (max-width: 768px) {
-        //            margin: 0 10px 5px 0;
-        //        }
-        //    }
-        //}
-        //.project-links {
-        //    justify-content: flex-end;
-        //    margin-left: 0;
-        //    margin-right: -10px;
-        //
-        //    @media (max-width: 768px) {
-        //        justify-content: flex-start;
-        //        margin-left: -10px;
-        //        margin-right: 0;
-        //    }
-        //}
+
+        .tech-row {
+            justify-content: flex-end;
+        }
+
         .project-image {
             grid-column: 1 / 8;
-            height: 4rem;
-            background-color: plum;
-            min-width: 0;
+            grid-row: 1 / -1;
+            position: relative;
 
-            //@media (max-width: 768px) {
-            //    grid-column: 1 / -1;
-            //}
+            z-index: 2;
+            @media (max-width: 768px) {
+                grid-column: 1 /-1;
+                grid-row: 2 / -1;
+            }
+        }
+    }
+
+    .project-content {
+        grid-column: 1 / 7;
+        grid-row: 1 / -1;
+        position: relative;
+        text-align: left;
+        z-index: 3;
+        @media (max-width: 1080px) {
+            grid-column: 1 / 9;
+        }
+
+        @media (max-width: 768px) {
+            grid-column: 1 /-1;
+            grid-row: 1 / 2;
+            //display: flex;
+            //flex-direction: column;
+            //justify-content: center;
+            //height: 100%;
+            //grid-column: 1;
+            //padding: 40px 40px 30px;
+            //z-index: 5;
+        }
+    }
+
+    .project-image {
+        grid-column: 6 / -1;
+        grid-row: 1 / -1;
+        position: relative;
+
+        overflow: hidden;
+
+        z-index: 1;
+
+        @media (max-width: 768px) {
+            grid-column: 1 /-1;
+            grid-row: 2 / -1;
+            //grid-column: 2 / -1;
+            //height: 100%;
+            //opacity: 0.25;
         }
     }
 `;
 
-const TextRow = styled.div`
-    display: flex;
-    flex-direction: row;
-    margin-bottom: 30px;
-`;
-
 const Text = styled(Banner)`
-    background-color: plum;
     font-size: clamp(26px, 8vw, 32px);
     font-weight: 700;
     margin: 0;
-`;
-
-const Dot = styled(Banner)`
-    font-size: clamp(26px, 8vw, 40px);
-    font-weight: 600;
-    line-height: 30px;
-    margin: 0 3px 0 0;
-
-    background: linear-gradient(180deg, #d0e, #91f);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
+    &:before {
+        content: '.';
+        font-size: clamp(26px, 8vw, 40px);
+        font-weight: 600;
+        line-height: 30px;
+        margin: 0 3px 0 0;
+        background: linear-gradient(180deg, #d0e, #91f);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+    }
 `;
 
 const Text2 = styled(SansDescriptionP)`
     font-size: clamp(10px, 8vw, 18px);
     line-height: 1.1;
-    text-align: right;
-    width: 500px;
+    //text-align: right;
     margin: 10px 0;
     padding-right: 20px;
     opacity: 0.8;
@@ -179,19 +183,41 @@ const Text2 = styled(SansDescriptionP)`
 `;
 
 const Text3 = styled(Banner)`
-    background-color: plum;
     font-size: clamp(26px, 8vw, 32px);
-    text-align: right;
+    //text-align: right;
     font-weight: 700;
-    margin: 0px 70px 0 0;
+    margin: 20px 0 0 0;
 `;
 
 const Text4 = styled(CaveatDescription)`
-    text-align: right;
-    margin: 0 70px 0 0;
+    //text-align: right;
+    margin: 20px 0 0 0;
     background: linear-gradient(180deg, #d0e, #91f);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
+`;
+
+const Text5 = styled(SansDescriptionP)`
+    font-size: clamp(10px, 8vw, 13px);
+    line-height: 1.1;
+    //text-align: right;
+    margin: 10px 20px 0 0;
+    //padding-right: 20px;
+    opacity: 0.8;
+    color: black;
+    &:last-of-type {
+        margin: 10px 0;
+    }
+`;
+
+const Overlay = styled(motion.div)`
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    background: linear-gradient(180deg, #d0e, #91f);
+    border-radius: 5px;
+    opacity: 0.2;
+    z-index: 1000;
 `;
 
 const Projects = props => {
@@ -218,49 +244,157 @@ const Projects = props => {
 
     return (
         <Container>
-            <TextRow>
-                <Dot>.</Dot>
-                <Text>Projects</Text>
-            </TextRow>
-            <GridRow>
-                <div className="project-content">
-                    {/* <ImageDecoration */}
-                    {/*    initial="rest" */}
-                    {/*    whileHover="hover" */}
-                    {/*    animate="rest" */}
-                    {/* > */}
-                    {/*    <Image */}
-                    {/*        style={{ borderRadius: 3 }} */}
-                    {/*        src="/project1.png" */}
-                    {/*        layout="fill" */}
-                    {/*    /> */}
-                    {/* </ImageDecoration> */}
-                    {/* <DescriptionColumn> */}
-                    {/*    <Text4>Featured Project</Text4> */}
-                    {/*    <Text3>SuperGuard™ian</Text3> */}
-                    {/*    <DescriptionBox> */}
-                    {/*        <Text2> */}
-                    {/*            A minimal, dark blue theme for VS Code, Sublime */}
-                    {/*            Text, Atom, iTerm, and more. Available on Visual */}
-                    {/*            Studio Marketplace, Package Control, Atom */}
-                    {/*            Package Manager, and npm. */}
-                    {/*        </Text2> */}
-                    {/*    </DescriptionBox> */}
-                    {/* </DescriptionColumn> */}
-                </div>
-                <div className="project-image">
-                    {/* <Link href="https://codefishstudio.com/"> */}
-                    {/*    <ATag> */}
-                    {/*        <Image */}
-                    {/*            src="/project1.png" */}
-                    {/*            layout="responsive" */}
-                    {/*            width="100%" */}
-                    {/*            height={300} */}
-                    {/*        /> */}
-                    {/*    </ATag> */}
-                    {/* </Link> */}
-                </div>
-            </GridRow>
+            <Text>Projects</Text>
+            <ProjectsSection>
+                <GridRow>
+                    <div className="project-content">
+                        <Text4>Featured Project</Text4>
+                        <Text3>SuperGuardian™</Text3>
+                        <DescriptionBox>
+                            <Text2>
+                                A minimal, dark blue theme for VS Code, Sublime
+                                Text, Atom, iTerm, and more. Available on Visual
+                                Studio Marketplace, Package Control, Atom
+                                Package Manager, and npm.
+                            </Text2>
+                        </DescriptionBox>
+                        <TechnologyRow className="tech-row">
+                            <Text5>React</Text5>
+                            <Text5>NextJS</Text5>
+                            <Text5>Storybook</Text5>
+                            <Text5>Styled Components</Text5>
+                        </TechnologyRow>
+                        <TechnologyRow className="tech-row">
+                            <ATag
+                                href="https://www.superguardian.com.au/"
+                                target="_blank"
+                                rel="noreferrer noopener"
+                            >
+                                <Image
+                                    src="/external-link-symbol.png"
+                                    width={20}
+                                    height={20}
+                                />
+                            </ATag>
+                        </TechnologyRow>
+                    </div>
+                    <div className="project-image">
+                        <Overlay whileHover={{ opacity: 0 }} />
+                        <ATag
+                            href="https://codefishstudio.com/"
+                            target="_blank"
+                            rel="noreferrer noopener"
+                        >
+                            <Image
+                                style={{ borderRadius: '3px' }}
+                                src="/super.png"
+                                width={600}
+                                height={450}
+                            />
+                        </ATag>
+                    </div>
+                </GridRow>
+
+                <GridRow>
+                    <div className="project-content">
+                        <Text4>Featured Project</Text4>
+                        <Text3>Viability.io</Text3>
+                        <DescriptionBox>
+                            <Text2>
+                                A minimal, dark blue theme for VS Code, Sublime
+                                Text, Atom, iTerm, and more. Available on Visual
+                                Studio Marketplace, Package Control, Atom
+                                Package Manager, and npm.
+                            </Text2>
+                        </DescriptionBox>
+                        <TechnologyRow className="tech-row">
+                            <Text5>React Native</Text5>
+                            <Text5>NextJS</Text5>
+                            <Text5>Storybook</Text5>
+                            <Text5>Styled Components</Text5>
+                        </TechnologyRow>
+                        <TechnologyRow className="tech-row">
+                            {/* <Link href="https://www.superguardian.com.au/"> */}
+                            <ATag
+                                href="https://www.superguardian.com.au/"
+                                target="_blank"
+                                rel="noreferrer noopener"
+                            >
+                                <Image
+                                    src="/external-link-symbol.png"
+                                    width={20}
+                                    height={20}
+                                />
+                            </ATag>
+                            {/* </Link> */}
+                        </TechnologyRow>
+                    </div>
+                    <div className="project-image">
+                        <Overlay whileHover={{ opacity: 0 }} />
+                        <ATag
+                            href="https://codefishstudio.com/"
+                            target="_blank"
+                            rel="noreferrer noopener"
+                        >
+                            <Image
+                                style={{ borderRadius: '3px' }}
+                                src="/v.png"
+                                width={600}
+                                height={450}
+                            />
+                        </ATag>
+                    </div>
+                </GridRow>
+
+                <GridRow>
+                    <div className="project-content">
+                        <Text4>Featured Project</Text4>
+                        <Text3>SuperGuardian™</Text3>
+                        <DescriptionBox>
+                            <Text2>
+                                A minimal, dark blue theme for VS Code, Sublime
+                                Text, Atom, iTerm, and more. Available on Visual
+                                Studio Marketplace, Package Control, Atom
+                                Package Manager, and npm.
+                            </Text2>
+                        </DescriptionBox>
+                        <TechnologyRow className="tech-row">
+                            <Text5>React</Text5>
+                            <Text5>NextJS</Text5>
+                            <Text5>Storybook</Text5>
+                            <Text5>Styled Components</Text5>
+                        </TechnologyRow>
+                        <TechnologyRow className="tech-row">
+                            <ATag
+                                href="https://www.superguardian.com.au/"
+                                target="_blank"
+                                rel="noreferrer noopener"
+                            >
+                                <Image
+                                    src="/external-link-symbol.png"
+                                    width={20}
+                                    height={20}
+                                />
+                            </ATag>
+                        </TechnologyRow>
+                    </div>
+                    <div className="project-image">
+                        <Overlay whileHover={{ opacity: 0 }} />
+                        <ATag
+                            href="https://codefishstudio.com/"
+                            target="_blank"
+                            rel="noreferrer noopener"
+                        >
+                            <Image
+                                style={{ borderRadius: '3px' }}
+                                src="/super.png"
+                                width={600}
+                                height={450}
+                            />
+                        </ATag>
+                    </div>
+                </GridRow>
+            </ProjectsSection>
         </Container>
     );
 };

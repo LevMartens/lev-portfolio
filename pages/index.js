@@ -5,7 +5,7 @@ import Introduction from '@root/page-sections/Introduction';
 import Projects from '@root/page-sections/Projects';
 
 const Container = styled.div`
-    background-color: darkseagreen;
+    // background-color: darkseagreen;
 `;
 
 export const getStaticProps = async () => ({
