@@ -31,7 +31,13 @@ export default class MyDocument extends Document {
 
     render() {
         return (
-            <Html>
+            <Html
+                style={{
+                    // boxSizing: 'border-box',
+                    width: '100%',
+                    scrollBehavior: 'smooth',
+                }}
+            >
                 <Head>
                     <link
                         rel="preconnect"
@@ -55,7 +61,10 @@ export default class MyDocument extends Document {
                     style={{
                         margin: '0px',
                         padding: '0px',
-                        overflow: 'hidden',
+                        height: '100%',
+                        width: '100%',
+                        minHeight: '100%',
+                        overflowX: 'hidden',
                     }}
                 >
                     <Main />

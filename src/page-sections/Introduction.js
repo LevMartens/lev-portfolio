@@ -10,15 +10,14 @@ import {
 } from '../../styles/Fonts';
 
 const Container = styled.div`
+    min-height: 100vh;
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 0;
     display: flex;
     flex-direction: column;
-
-    justify-content: flex-start;
+    justify-content: center;
     align-items: flex-start;
-
-    padding: 25px;
-
-    margin-bottom: 300px;
 `;
 
 const Greeting = styled(CaveatDescription)`
@@ -35,7 +34,7 @@ const Text2 = styled(SansDescription)`
     font-size: clamp(10px, 8vw, 20px);
     line-height: 1.1;
     margin: 20px 0;
-    padding-right: 340px;
+    max-width: 540px;
     opacity: 0.8;
     color: black;
 `;
@@ -55,6 +54,10 @@ const ButtonText = styled(FullName)`
     color: #ffffff;
     line-height: 43px;
     cursor: pointer;
+    @media (max-width: 768px) {
+        font-size: 28px;
+        line-height: 20px;
+    }
 `;
 
 const Button = styled(motion.div)`
@@ -67,6 +70,10 @@ const Button = styled(motion.div)`
     align-items: center;
     justify-content: center;
     cursor: pointer;
+    @media (max-width: 768px) {
+        width: 130px;
+        height: 20px;
+    }
 `;
 
 const Introduction = props => {
@@ -101,6 +108,8 @@ const Introduction = props => {
             variants={container}
             initial="hidden"
             animate="visible"
+            // animate={controls}
+            // layout
         >
             <Greeting as={motion.span} variants={item}>
                 Hi, my name is
@@ -112,8 +121,8 @@ const Introduction = props => {
                 I build front-end for web and mobile.
             </Text>
             <Text2 as={motion.span} variants={item}>
-                {`I'm a front-end developer specializing in building exceptional
-                user experiences. Currently, I'm focused on building accessible,
+                {`I'm a front-end developer specializing in building exceptional 
+                user experiences. Currently, I'm focused on building accessible, 
                 human centered products at `}
                 <a
                     style={{ textDecoration: 'none' }}

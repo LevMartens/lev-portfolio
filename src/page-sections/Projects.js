@@ -1,108 +1,156 @@
+import db from '@firebase/clientApp';
+import { collection, getDocs } from 'firebase/firestore/lite';
 import { motion } from 'framer-motion';
 import Image from 'next/image';
+import Link from 'next/link';
+import { useEffect } from 'react';
 import styled from 'styled-components';
 
-import { Banner, SansDescriptionP, SansListItem } from '../../styles/Fonts';
+import useCollection from '@hooks/useCollection';
+
+import {
+    Banner,
+    CaveatDescription,
+    SansDescriptionP,
+    SansListItem,
+} from '../../styles/Fonts';
 
 const Container = styled.div`
+    max-width: 1000px;
     display: flex;
     flex-direction: column;
     justify-content: space-evenly;
     margin-bottom: 300px;
     //margin-left: 100px;
 `;
-const Technologies = styled.ul`
-    display: grid;
-    grid-template-columns: repeat(2, minmax(140px, 200px));
-    gap: 0 10px;
-    padding: 0;
-    margin: 20px 0 0;
-    overflow: hidden;
-    list-style: none;
-`;
-const ListItem = styled(SansListItem)`
-    position: relative;
-    margin-bottom: 10px;
-    padding-left: 20px;
-    display: list-item;
-    text-align: -webkit-match-parent;
 
-    &:before {
-        content: '▹';
-        position: absolute;
-        left: 0;
-        background: linear-gradient(180deg, #d0e, #91f);
-        -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
-        font-size: 13px;
-        line-height: 12px;
-    }
-`;
-const Overlay = styled(motion.div)`
-    position: absolute;
-    height: 260px;
-    width: 200px;
-    background: linear-gradient(180deg, #d0e, #91f);
-    border-radius: 5px;
-    opacity: 0.2;
-    z-index: 1000;
+const ATag = styled.a`
+    text-decoration: none;
 `;
 
-const FloatingBoarder = styled(motion.div)`
-    justify-content: center;
-    align-items: center;
+const DescriptionBox = styled.div`
     position: absolute;
-    overflow: hidden;
-    top: 10px;
-    left: 10px;
-    height: 260px;
-    width: 200px;
-    border: 2px solid #d0e;
+    top: 130px;
+    right: 70px;
+    //margin-right: 70px;
+    padding: 15px 20px;
+    background-color: white; //#faf9f6; //#f5f5f5; //#f2f8ff;
     border-radius: 3px;
-    opacity: 1;
-    z-index: 0;
-    &:before {
-        content: '';
-        position: absolute;
-        width: 100%;
-        height: 100%;
-        top: 20px;
-        left: 20px;
-        z-index: -1;
-        background-image: url('/lev-purple.png');
-        background-repeat: no-repeat;
-        background-size: contain;
-        transform: rotate(90deg);
-    }
+    //border: 1px solid rgba(0, 0, 0, 0.24);
+    box-shadow: rgba(0, 0, 0, 0.24) 0 3px 8px;
 `;
-const Description = styled.div`
+
+const DescriptionColumn = styled.div`
+    position: relative;
+    background-color: cadetblue;
     display: flex;
     flex-direction: column;
-    justify-content: space-evenly;
+    justify-content: flex-start;
 `;
 const ImageDecoration = styled(motion.div)`
     position: relative;
     display: flex;
+    grid-column: -1 / 1; // 1 / 8;
+    grid-area: 1 / 6 / -1 / -1;
     //padding: 5px;
-    height: 260px;
-    width: 200px;
+    //height: 400px;
+    //width: 520px;
+    width: 100%;
     margin-left: 20px;
     //background: linear-gradient(180deg, #d0e, #91f);
     border-radius: 3px;
+    // box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+    box-shadow: rgba(0, 0, 0, 0.24) 0 3px 8px;
 `;
 
 const GridRow = styled.div`
+    background-color: aqua;
+    position: relative;
     display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 20px;
+    grid-gap: 10px;
+    grid-template-columns: repeat(12, 1fr);
+    align-items: center;
+
+    &:not(:last-of-type) {
+        margin-bottom: 100px;
+
+        @media (max-width: 768px) {
+            margin-bottom: 70px;
+        }
+
+        @media (max-width: 480px) {
+            margin-bottom: 30px;
+        }
+    }
+
+    &:nth-of-type(even) {
+        .project-content {
+            grid-column: 7 / -1;
+            text-align: right;
+            background-color: coral;
+            height: 4rem;
+            min-width: 0;
+
+            //margin: 0 auto;
+            //@media (max-width: 1080px) {
+            //    grid-column: 5 / -1;
+            //}
+            //@media (max-width: 768px) {
+            //    grid-column: 1 / -1;
+            //    padding: 40px 40px 30px;
+            //    text-align: left;
+            //}
+            //@media (max-width: 480px) {
+            //    padding: 25px 25px 20px;
+            //}
+        }
+        //.project-tech-list {
+        //    justify-content: flex-end;
+        //
+        //    @media (max-width: 768px) {
+        //        justify-content: flex-start;
+        //    }
+        //
+        //    li {
+        //        margin: 0 0 5px 20px;
+        //
+        //        @media (max-width: 768px) {
+        //            margin: 0 10px 5px 0;
+        //        }
+        //    }
+        //}
+        //.project-links {
+        //    justify-content: flex-end;
+        //    margin-left: 0;
+        //    margin-right: -10px;
+        //
+        //    @media (max-width: 768px) {
+        //        justify-content: flex-start;
+        //        margin-left: -10px;
+        //        margin-right: 0;
+        //    }
+        //}
+        .project-image {
+            grid-column: 1 / 8;
+            height: 4rem;
+            background-color: plum;
+            min-width: 0;
+
+            //@media (max-width: 768px) {
+            //    grid-column: 1 / -1;
+            //}
+        }
+    }
 `;
 
 const TextRow = styled.div`
     display: flex;
     flex-direction: row;
+    margin-bottom: 30px;
 `;
 
 const Text = styled(Banner)`
+    background-color: plum;
     font-size: clamp(26px, 8vw, 32px);
     font-weight: 700;
     margin: 0;
@@ -120,8 +168,9 @@ const Dot = styled(Banner)`
 `;
 
 const Text2 = styled(SansDescriptionP)`
-    font-size: clamp(10px, 8vw, 20px);
+    font-size: clamp(10px, 8vw, 18px);
     line-height: 1.1;
+    text-align: right;
     width: 500px;
     margin: 10px 0;
     padding-right: 20px;
@@ -129,8 +178,30 @@ const Text2 = styled(SansDescriptionP)`
     color: black;
 `;
 
+const Text3 = styled(Banner)`
+    background-color: plum;
+    font-size: clamp(26px, 8vw, 32px);
+    text-align: right;
+    font-weight: 700;
+    margin: 0px 70px 0 0;
+`;
+
+const Text4 = styled(CaveatDescription)`
+    text-align: right;
+    margin: 0 70px 0 0;
+    background: linear-gradient(180deg, #d0e, #91f);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+`;
+
 const Projects = props => {
     const {} = props;
+
+    const { projects, initializeProjects } = useCollection();
+
+    useEffect(() => {
+        initializeProjects();
+    }, []);
 
     const floatingBorderAnimation = {
         hover: {
@@ -143,54 +214,52 @@ const Projects = props => {
         },
     };
 
+    // console.log('projects', projects[0].name);
+
     return (
         <Container>
             <TextRow>
                 <Dot>.</Dot>
-                <Text>About Me</Text>
+                <Text>Projects</Text>
             </TextRow>
             <GridRow>
-                <Description>
-                    <Text2>
-                        Hello! My name is Lev and I enjoy creating things that
-                        live on screens. My interest in software development
-                        started back in 2019 when I decided to try and create my
-                        first app.
-                    </Text2>
-                    <Text2>
-                        Fast-forward to today, and I’ve have build multiple app
-                        and web projects from git init to publishing on the app
-                        store. My main focus these days is building accessible,
-                        inclusive products and digital experiences at CodeFish
-                        Studio for a variety of clients.
-                    </Text2>
-                    <Text2>
-                        Here are a few technologies I’ve been working with
-                        recently:
-                    </Text2>
-                    <Technologies>
-                        <ListItem>React</ListItem>
-                        <ListItem>React Native</ListItem>
-                        <ListItem>Flutter</ListItem>
-                        <ListItem>JavaScript (ES6+)</ListItem>
-                        <ListItem>HTML5</ListItem>
-                        <ListItem>CSS</ListItem>
-                    </Technologies>
-                </Description>
-                <ImageDecoration
-                    initial="rest"
-                    whileHover="hover"
-                    animate="rest"
-                >
-                    <FloatingBoarder variants={floatingBorderAnimation} />
-                    <Overlay whileHover={{ opacity: 0 }} />
-                    <Image
-                        style={{ borderRadius: 3 }}
-                        src="/lev.jpg"
-                        height={100}
-                        width={200}
-                    />
-                </ImageDecoration>
+                <div className="project-content">
+                    {/* <ImageDecoration */}
+                    {/*    initial="rest" */}
+                    {/*    whileHover="hover" */}
+                    {/*    animate="rest" */}
+                    {/* > */}
+                    {/*    <Image */}
+                    {/*        style={{ borderRadius: 3 }} */}
+                    {/*        src="/project1.png" */}
+                    {/*        layout="fill" */}
+                    {/*    /> */}
+                    {/* </ImageDecoration> */}
+                    {/* <DescriptionColumn> */}
+                    {/*    <Text4>Featured Project</Text4> */}
+                    {/*    <Text3>SuperGuard™ian</Text3> */}
+                    {/*    <DescriptionBox> */}
+                    {/*        <Text2> */}
+                    {/*            A minimal, dark blue theme for VS Code, Sublime */}
+                    {/*            Text, Atom, iTerm, and more. Available on Visual */}
+                    {/*            Studio Marketplace, Package Control, Atom */}
+                    {/*            Package Manager, and npm. */}
+                    {/*        </Text2> */}
+                    {/*    </DescriptionBox> */}
+                    {/* </DescriptionColumn> */}
+                </div>
+                <div className="project-image">
+                    {/* <Link href="https://codefishstudio.com/"> */}
+                    {/*    <ATag> */}
+                    {/*        <Image */}
+                    {/*            src="/project1.png" */}
+                    {/*            layout="responsive" */}
+                    {/*            width="100%" */}
+                    {/*            height={300} */}
+                    {/*        /> */}
+                    {/*    </ATag> */}
+                    {/* </Link> */}
+                </div>
             </GridRow>
         </Container>
     );

@@ -5,11 +5,13 @@ import styled from 'styled-components';
 import { Banner, SansDescriptionP, SansListItem } from '../../styles/Fonts';
 
 const Container = styled.div`
+    min-height: 100vh;
+    max-width: 900px;
+    margin: 0 auto;
     display: flex;
     flex-direction: column;
-    justify-content: space-evenly;
-    margin-bottom: 300px;
-    margin-left: 100px;
+    justify-content: center;
+    align-items: flex-start;
 `;
 const Technologies = styled.ul`
     display: grid;
@@ -74,6 +76,9 @@ const FloatingBoarder = styled(motion.div)`
         background-size: contain;
         transform: rotate(90deg);
     }
+    @media (max-width: 768px) {
+        display: none;
+    }
 `;
 const Description = styled.div`
     display: flex;
@@ -83,46 +88,50 @@ const Description = styled.div`
 const ImageDecoration = styled(motion.div)`
     position: relative;
     display: flex;
-    //padding: 5px;
     height: 260px;
     width: 200px;
-    margin-left: 20px;
-    //background: linear-gradient(180deg, #d0e, #91f);
     border-radius: 3px;
 `;
 
 const GridRow = styled.div`
+    margin: 20px 0 0;
     display: grid;
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: 3fr 2fr;
     gap: 20px;
+    @media (max-width: 768px) {
+        grid-template-columns: unset;
+        grid-template-rows: 3fr 2fr;
+    }
 `;
 
-const TextRow = styled.div`
-    display: flex;
-    flex-direction: row;
+const ImageContainer = styled.div`
+    @media (max-width: 768px) {
+        display: flex;
+        justify-content: center;
+    }
 `;
 
 const Text = styled(Banner)`
     font-size: clamp(26px, 8vw, 32px);
     font-weight: 700;
     margin: 0;
-`;
+    &:before {
+        content: '.';
 
-const Dot = styled(Banner)`
-    font-size: clamp(26px, 8vw, 40px);
-    font-weight: 600;
-    line-height: 30px;
-    margin: 0 3px 0 0;
+        font-size: clamp(26px, 8vw, 40px);
+        font-weight: 600;
+        line-height: 30px;
+        margin: 0 3px 0 0;
 
-    background: linear-gradient(180deg, #d0e, #91f);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
+        background: linear-gradient(180deg, #d0e, #91f);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+    }
 `;
 
 const Text2 = styled(SansDescriptionP)`
     font-size: clamp(10px, 8vw, 20px);
     line-height: 1.1;
-    width: 500px;
     margin: 10px 0;
     padding-right: 20px;
     opacity: 0.8;
@@ -145,10 +154,7 @@ const AboutMe = props => {
 
     return (
         <Container>
-            <TextRow>
-                <Dot>.</Dot>
-                <Text>About Me</Text>
-            </TextRow>
+            <Text>About Me</Text>
             <GridRow>
                 <Description>
                     <Text2>
@@ -177,20 +183,22 @@ const AboutMe = props => {
                         <ListItem>CSS</ListItem>
                     </Technologies>
                 </Description>
-                <ImageDecoration
-                    initial="rest"
-                    whileHover="hover"
-                    animate="rest"
-                >
-                    <FloatingBoarder variants={floatingBorderAnimation} />
-                    <Overlay whileHover={{ opacity: 0 }} />
-                    <Image
-                        style={{ borderRadius: 3 }}
-                        src="/lev.jpg"
-                        height={100}
-                        width={200}
-                    />
-                </ImageDecoration>
+                <ImageContainer>
+                    <ImageDecoration
+                        initial="rest"
+                        whileHover="hover"
+                        animate="rest"
+                    >
+                        <FloatingBoarder variants={floatingBorderAnimation} />
+                        <Overlay whileHover={{ opacity: 0 }} />
+                        <Image
+                            style={{ borderRadius: 3 }}
+                            src="/lev.jpg"
+                            height={100}
+                            width={200}
+                        />
+                    </ImageDecoration>
+                </ImageContainer>
             </GridRow>
         </Container>
     );

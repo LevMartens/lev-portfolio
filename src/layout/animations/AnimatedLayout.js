@@ -7,23 +7,28 @@ import { Banner, FullName } from '../../../styles/Fonts';
 /* eslint-disable react/no-array-index-key */
 
 const Container = styled.div`
+    min-height: 100vh;
     display: flex;
-    flex-direction: column;
-    overflow: scroll;
     justify-content: center;
     align-items: center;
-    height: 100vh;
-    padding: 0 300px ;
     &.show-page {
       justify-content: unset;
     },
-    
 `;
 
-const Page = styled.div``;
+const Page = styled.div`
+    margin: 0 auto;
+    padding: 0 150px;
+    min-height: 100vh;
+    width: 100%;
+    max-width: 1600px;
+    @media (max-width: 768px) {
+        padding: 0 50px;
+    }
+`;
 
 const NameContainer = styled.div`
-    position: absolute;
+    position: fixed;
     width: 180px;
     height: 50px;
     display: grid;
@@ -124,8 +129,8 @@ const AnimatedLayout = props => {
                     borderRadius: ['20%', '20%', '50%', '50%'],
                 });
                 await controls.start({
-                    top: 20,
-                    left: 30,
+                    top: 10,
+                    left: 25,
                     transition: {
                         type: 'spring',
                         damping: 20,

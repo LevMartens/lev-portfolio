@@ -5,9 +5,7 @@ import Introduction from '@root/page-sections/Introduction';
 import Projects from '@root/page-sections/Projects';
 
 const Container = styled.div`
-    //overflow: scroll;
-    height: 100vh;
-    margin: 300px 0 200px 0;
+    background-color: darkseagreen;
 `;
 
 export const getStaticProps = async () => ({
