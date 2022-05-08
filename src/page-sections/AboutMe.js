@@ -2,6 +2,8 @@ import { motion } from 'framer-motion';
 import Image from 'next/image';
 import styled from 'styled-components';
 
+import { debounce } from '@root/helpers/debounce';
+
 import { Banner, SansDescriptionP, SansListItem } from '../../styles/Fonts';
 
 const Container = styled.div`
@@ -149,6 +151,12 @@ const AboutMe = props => {
             scale: 0.8,
             rotate: -90,
             borderRadius: '100%',
+        },
+    };
+
+    const floatingBorderAnimation1 = {
+        hover: {
+            opacity: 0,
         },
     };
 

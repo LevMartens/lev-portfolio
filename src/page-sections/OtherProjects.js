@@ -21,8 +21,9 @@ const Container = styled.div`
     align-items: flex-start;
 `;
 
-const ProjectsSection = styled.div`
+const OtherProjectsSection = styled.div`
     margin: 20px 0 0;
+  grid-template-columns: repeat(3, 1fr);
 `;
 
 const ATag = styled.a`
@@ -197,68 +198,23 @@ const Overlay = styled(motion.div)`
     z-index: 1000;
 `;
 
-const Projects = props => {
+const OtherProjects = props => {
     const {} = props;
 
-    const { projects } = useCollectionContext();
+    const { otherProjects } = useCollectionContext();
 
     return (
         <Container>
-            <Heading>Projects</Heading>
-            <ProjectsSection>
-                {projects.map(project => (
-                    <GridRow key={project.id}>
-                        <div className="project-content">
-                            <Title>Featured Project</Title>
-                            <ProjectName>{project.name}</ProjectName>
-                            <DescriptionBox>
-                                <Description>{project.description}</Description>
-                            </DescriptionBox>
-                            <UtilsRow className="tech-row">
-                                {project.techStack.map(tech => (
-                                    <Technology key={project.id + tech}>
-                                        {tech}
-                                    </Technology>
-                                ))}
-                            </UtilsRow>
-                            <UtilsRow className="tech-row">
-                                <ATag
-                                    href={project.website}
-                                    target="_blank"
-                                    rel="noreferrer noopener"
-                                >
-                                    <Image
-                                        src="/external-link-symbol.png"
-                                        width={20}
-                                        height={20}
-                                    />
-                                </ATag>
-                            </UtilsRow>
-                        </div>
-                        <div className="project-image">
-                            <Overlay whileHover={{ opacity: 0 }} />
-                            <ATag
-                                href={project.website}
-                                target="_blank"
-                                rel="noreferrer noopener"
-                            >
-                                <Image
-                                    style={{ borderRadius: '3px' }}
-                                    src={project.image}
-                                    width={600}
-                                    height={450}
-                                />
-                            </ATag>
-                        </div>
-                    </GridRow>
-                ))}
-            </ProjectsSection>
+            <Heading>Other Projects</Heading>
+            <OtherProjectsSection>
+
+            </OtherProjectsSection>
         </Container>
     );
 };
 
-Projects.propTypes = {};
+OtherProjects.propTypes = {};
 
-Projects.defaultProps = {};
+OtherProjects.defaultProps = {};
 
-export default Projects;
+export default OtherProjects;
