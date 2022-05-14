@@ -16,6 +16,33 @@ const Container = styled.div`
     },
 `;
 
+const ContactContainer = styled.div`
+    bottom: 50px;
+    left: 50px;
+    position: fixed;
+    @media (max-width: 768px) {
+        display: none;
+    }
+`;
+
+const GitHub = styled.div`
+    height: 20px;
+    width: 20px;
+    background-image: url('/git.png');
+    background-repeat: no-repeat;
+    background-size: contain;
+    margin-bottom: 20px;
+    cursor: pointer;
+`;
+const LinkedIn = styled.div`
+    height: 20px;
+    width: 20px;
+    background-image: url('/in.png');
+    background-repeat: no-repeat;
+    background-size: contain;
+    cursor: pointer;
+`;
+
 const Page = styled.div`
     margin: 0 auto;
     padding: 0 150px;
@@ -42,6 +69,9 @@ const NameContainer = styled.div`
     padding: 15px;
     background: linear-gradient(180deg, #d0e, #91f);
     border-radius: 50px;
+    @media (max-width: 768px) {
+        display: none;
+    }
 `;
 
 const Text = styled(Banner)`
@@ -196,6 +226,22 @@ const AnimatedLayout = props => {
                 </Text2>
             </NameContainer>
             <Page x-if={!isAnimating}>{children}</Page>
+            <ContactContainer x-if={!isAnimating}>
+                <a
+                    target="_blank"
+                    href="https://github.com/LevMartens"
+                    rel="noreferrer"
+                >
+                    <GitHub />
+                </a>
+                <a
+                    target="_blank"
+                    href="https://www.linkedin.com/in/lev-martens"
+                    rel="noreferrer"
+                >
+                    <LinkedIn />
+                </a>
+            </ContactContainer>
         </Container>
     );
 };

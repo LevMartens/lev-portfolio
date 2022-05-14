@@ -1,6 +1,5 @@
 import { motion } from 'framer-motion';
 import Image from 'next/image';
-import { useEffect } from 'react';
 import styled from 'styled-components';
 
 import { useCollectionContext } from '@root/context/CollectionContext';
@@ -19,6 +18,10 @@ const Container = styled.div`
     flex-direction: column;
     justify-content: center;
     align-items: flex-start;
+
+    @media (max-width: 768px) {
+        padding-top: 150px;
+    }
 `;
 
 const ProjectsSection = styled.div`

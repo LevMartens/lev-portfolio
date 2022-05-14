@@ -1,6 +1,5 @@
 import { motion } from 'framer-motion';
 import Image from 'next/image';
-import { useEffect } from 'react';
 import styled from 'styled-components';
 
 import { useCollectionContext } from '@root/context/CollectionContext';
@@ -19,124 +18,30 @@ const Container = styled.div`
     flex-direction: column;
     justify-content: center;
     align-items: flex-start;
+
+    @media (max-width: 768px) {
+        padding-top: 150px;
+    }
 `;
 
 const OtherProjectsSection = styled.div`
     margin: 20px 0 0;
-  grid-template-columns: repeat(3, 1fr);
-`;
-
-const ATag = styled.a`
-    text-decoration: none;
-    cursor: pointer;
-`;
-
-const DescriptionBox = styled.div`
-    position: relative;
-    z-index: 3;
-    margin: 20px 0;
-    padding: 15px 20px;
-    background-color: white;
-    border-radius: 3px;
-    box-shadow: rgba(0, 0, 0, 0.24) 0 3px 8px;
-`;
-
-const UtilsRow = styled.div`
-    position: relative;
-    z-index: 3;
-    display: flex;
-    flex-wrap: wrap;
-    flex-direction: row;
-
-    &:not(:last-of-type) {
-        margin: 20px 0;
-    }
-`;
-
-const GridRow = styled.li`
     position: relative;
     display: grid;
-    grid-gap: 10px;
-    grid-template-columns: repeat(12, 1fr);
-    align-items: center;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    grid-auto-rows: 1fr;
+    grid-gap: 15px;
+`;
 
-    @media (max-width: 768px) {
-        grid-template-rows: 1fr 1fr;
-    }
-
-    &:not(:last-of-type) {
-        margin-bottom: 100px;
-
-        @media (max-width: 768px) {
-            margin-bottom: 70px;
-        }
-
-        @media (max-width: 480px) {
-            margin-bottom: 30px;
-        }
-    }
-
-    &:nth-of-type(odd) {
-        .project-content {
-            grid-column: 7 / -1;
-            grid-row: 1 / -1;
-            position: relative;
-            text-align: right;
-            z-index: 3;
-            @media (max-width: 1080px) {
-                grid-column: 5 / -1;
-            }
-            @media (max-width: 768px) {
-                grid-column: 1 /-1;
-                grid-row: 1 / 2;
-            }
-        }
-
-        .tech-row {
-            justify-content: flex-end;
-        }
-
-        .project-image {
-            grid-column: 1 / 8;
-            grid-row: 1 / -1;
-            position: relative;
-
-            z-index: 2;
-            @media (max-width: 768px) {
-                grid-column: 1 /-1;
-                grid-row: 2 / -1;
-            }
-        }
-    }
-
-    .project-content {
-        grid-column: 1 / 7;
-        grid-row: 1 / -1;
-        position: relative;
-        text-align: left;
-        z-index: 3;
-        @media (max-width: 1080px) {
-            grid-column: 1 / 9;
-        }
-
-        @media (max-width: 768px) {
-            grid-column: 1 /-1;
-            grid-row: 1 / 2;
-        }
-    }
-
-    .project-image {
-        grid-column: 6 / -1;
-        grid-row: 1 / -1;
-        position: relative;
-        overflow: hidden;
-        z-index: 1;
-
-        @media (max-width: 768px) {
-            grid-column: 1 /-1;
-            grid-row: 2 / -1;
-        }
-    }
+const ProjectCard = styled(motion.a)`
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 20px;
+    background-color: white;
+    box-shadow: rgba(0, 0, 0, 0.24) 0 3px 8px;
+    cursor: pointer;
+    text-decoration: none;
 `;
 
 const Heading = styled(Banner)`
@@ -162,19 +67,15 @@ const Description = styled(SansDescriptionP)`
     padding-right: 20px;
     opacity: 0.8;
     color: black;
-`;
-
-const ProjectName = styled(Banner)`
-    font-size: clamp(26px, 8vw, 32px);
-    font-weight: 700;
-    margin: 20px 0 0 0;
+    word-wrap: break-word;
 `;
 
 const Title = styled(CaveatDescription)`
-    margin: 20px 0 0 0;
-    background: linear-gradient(180deg, #d0e, #91f);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
+    margin: 20px 0 20px 0;
+    font-size: 30px;
+    opacity: 0.8;
+    color: black;
+    word-wrap: break-word;
 `;
 
 const Technology = styled(SansDescriptionP)`
@@ -183,19 +84,21 @@ const Technology = styled(SansDescriptionP)`
     margin: 10px 20px 0 0;
     opacity: 0.8;
     color: black;
+    word-wrap: break-word;
     &:last-of-type {
         margin: 10px 0;
     }
 `;
 
-const Overlay = styled(motion.div)`
-    position: absolute;
-    height: 100%;
-    width: 100%;
-    background: linear-gradient(180deg, #d0e, #91f);
-    border-radius: 5px;
-    opacity: 0.2;
-    z-index: 1000;
+const ImageContainer = styled.div`
+    height: 30px;
+    width: 30px;
+`;
+
+const TechRow = styled.div`
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;
 `;
 
 const OtherProjects = props => {
@@ -205,9 +108,31 @@ const OtherProjects = props => {
 
     return (
         <Container>
-            <Heading>Other Projects</Heading>
+            <Heading>Other Noteworthy Projects</Heading>
             <OtherProjectsSection>
+                {otherProjects.map(project => (
+                    <ProjectCard
+                        key={project.id}
+                        whileHover={{ y: -10 }}
+                        target="_blank"
+                        href={project.link}
+                        rel="noreferrer"
+                    >
+                        <header>
+                            <ImageContainer>
+                                <Image src="/code.png" width={30} height={30} />
+                            </ImageContainer>
+                            <Title>{project.title}</Title>
 
+                            <Description>{project.description}</Description>
+                        </header>
+                        <TechRow>
+                            {project.techStack.map((tech, idx) => (
+                                <Technology key={tech + idx}>{tech}</Technology>
+                            ))}
+                        </TechRow>
+                    </ProjectCard>
+                ))}
             </OtherProjectsSection>
         </Container>
     );

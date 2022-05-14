@@ -2,8 +2,6 @@ import { motion } from 'framer-motion';
 import Image from 'next/image';
 import styled from 'styled-components';
 
-import { debounce } from '@root/helpers/debounce';
-
 import { Banner, SansDescriptionP, SansListItem } from '../../styles/Fonts';
 
 const Container = styled.div`
@@ -15,6 +13,7 @@ const Container = styled.div`
     justify-content: center;
     align-items: flex-start;
 `;
+
 const Technologies = styled.ul`
     display: grid;
     grid-template-columns: repeat(2, minmax(140px, 200px));
@@ -24,6 +23,7 @@ const Technologies = styled.ul`
     overflow: hidden;
     list-style: none;
 `;
+
 const ListItem = styled(SansListItem)`
     position: relative;
     margin-bottom: 10px;
@@ -42,6 +42,7 @@ const ListItem = styled(SansListItem)`
         line-height: 12px;
     }
 `;
+
 const Overlay = styled(motion.div)`
     position: absolute;
     height: 260px;
@@ -82,11 +83,13 @@ const FloatingBoarder = styled(motion.div)`
         display: none;
     }
 `;
+
 const Description = styled.div`
     display: flex;
     flex-direction: column;
     justify-content: space-evenly;
 `;
+
 const ImageDecoration = styled(motion.div)`
     position: relative;
     display: flex;
@@ -151,12 +154,6 @@ const AboutMe = props => {
             scale: 0.8,
             rotate: -90,
             borderRadius: '100%',
-        },
-    };
-
-    const floatingBorderAnimation1 = {
-        hover: {
-            opacity: 0,
         },
     };
 

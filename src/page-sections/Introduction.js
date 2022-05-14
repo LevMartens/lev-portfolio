@@ -1,5 +1,4 @@
-import { motion, useAnimation } from 'framer-motion';
-import PropTypes from 'prop-types';
+import { motion } from 'framer-motion';
 import styled from 'styled-components';
 
 import {
@@ -60,7 +59,7 @@ const ButtonText = styled(FullName)`
     }
 `;
 
-const Button = styled(motion.div)`
+const Button = styled(motion.a)`
     width: 180px;
     height: 50px;
     margin-top: 40px;
@@ -70,6 +69,7 @@ const Button = styled(motion.div)`
     align-items: center;
     justify-content: center;
     cursor: pointer;
+    text-decoration: none;
     @media (max-width: 768px) {
         width: 130px;
         height: 20px;
@@ -108,8 +108,6 @@ const Introduction = props => {
             variants={container}
             initial="hidden"
             animate="visible"
-            // animate={controls}
-            // layout
         >
             <Greeting as={motion.span} variants={item}>
                 Hi, my name is
@@ -134,7 +132,7 @@ const Introduction = props => {
                 </a>
             </Text2>
             <Button
-                as={motion.span}
+                href="mailto:levmartens@gmail.com"
                 variants={item}
                 whileHover={{ scale: 1.2 }}
                 whileTap={{ scale: 0.8 }}

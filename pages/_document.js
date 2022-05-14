@@ -33,7 +33,6 @@ export default class MyDocument extends Document {
         return (
             <Html
                 style={{
-                    // boxSizing: 'border-box',
                     width: '100%',
                     scrollBehavior: 'smooth',
                 }}
