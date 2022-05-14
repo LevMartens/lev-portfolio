@@ -143,38 +143,41 @@ const AnimatedLayout = props => {
     };
 
     useEffect(() => {
-        let timer2 = null;
-        const timer = setTimeout(async () => {
-            await controls2.start('visible');
-            await controls.start('visible');
-            timer2 = setTimeout(async () => {
-                setO(false);
-                await controls2.start('hidden');
-                await controls.start({
-                    width: 50,
-                });
-                await controls.start({
-                    scale: [1, 2, 2, 1, 1],
-                    rotate: [0, 0, 270, 270, 0],
-                    borderRadius: ['20%', '20%', '50%', '50%'],
-                });
-                await controls.start({
-                    top: 10,
-                    left: 25,
-                    transition: {
-                        type: 'spring',
-                        damping: 20,
-                    },
-                    gridTemplateColumns: '15px 35px',
-                });
-                setA(true);
-                setIsAnimating(false);
-            }, 1100);
-        }, 500);
-        return () => {
-            clearTimeout(timer2);
-            clearTimeout(timer);
-        };
+        if (window.innerWidth >= 768) {
+            let timer2 = null;
+            const timer = setTimeout(async () => {
+                await controls2.start('visible');
+                await controls.start('visible');
+                timer2 = setTimeout(async () => {
+                    setO(false);
+                    await controls2.start('hidden');
+                    await controls.start({
+                        width: 50,
+                    });
+                    await controls.start({
+                        scale: [1, 2, 2, 1, 1],
+                        rotate: [0, 0, 270, 270, 0],
+                        borderRadius: ['20%', '20%', '50%', '50%'],
+                    });
+                    await controls.start({
+                        top: 10,
+                        left: 25,
+                        transition: {
+                            type: 'spring',
+                            damping: 20,
+                        },
+                        gridTemplateColumns: '15px 35px',
+                    });
+                    setA(true);
+                    setIsAnimating(false);
+                }, 1100);
+            }, 500);
+            return () => {
+                clearTimeout(timer2);
+                clearTimeout(timer);
+            };
+        }
+        setIsAnimating(false);
     }, [controls, controls2]);
 
     return (
